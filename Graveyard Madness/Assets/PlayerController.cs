@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 2f;
     private Vector2 xPos;
+    bool isFacingRight;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +19,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         transform.Translate(new Vector2(xPos.x * Time.deltaTime * moveSpeed, 0f));
+        if (xPos.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
+        else if (xPos.x < 0)
+        {
+            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
     }
 
-    private void FixedUpdate()
-    {
-
-    }
-
-    public void Move(InputAction.CallbackContext context) 
+    public void Move(InputAction.CallbackContext context)
     {
         xPos = context.ReadValue<Vector2>();
     }
