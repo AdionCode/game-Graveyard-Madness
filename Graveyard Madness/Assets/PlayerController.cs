@@ -9,29 +9,34 @@ public class PlayerController : MonoBehaviour
     private Vector2 xPos;
     bool isFacingRight;
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(new Vector2(xPos.x * Time.deltaTime * moveSpeed, 0f));
-        if (xPos.x > 0)
+        if (isFacingRight && xPos.x > 0)
         {
-            transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        }
-        else if (xPos.x < 0)
+            flip();
+        } else if (!isFacingRight && xPos.x < 0)
         {
-            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            flip();
         }
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         xPos = context.ReadValue<Vector2>();
+    }
+
+    void flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler;
     }
 
 }
