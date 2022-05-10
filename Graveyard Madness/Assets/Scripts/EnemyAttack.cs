@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerAttack : MonoBehaviour
+public class EnemyAttack : MonoBehaviour
 {
     private float timeToAttack;
     [SerializeField] private float startTimeToAttack;
@@ -13,30 +12,28 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask whatIsEnemies;
     public int damage;
 
-    // Start is called before the first frame update
+    public bool dalamJankauan;
+
+
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        dalamJankauan = GetComponent<EnemyChase>().isAttackRange;
         timeToAttack -= Time.deltaTime;
     }
 
-    public void Attack(InputAction.CallbackContext context)
+    void Update()
     {
-        if (timeToAttack <= 0)
+        Attack();
+        timeToAttack -= Time.deltaTime;
+    }
+
+    public void Attack()
+    {
+        if (timeToAttack <= 0 && !dalamJankauan)
         {
-            Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
-            for (int i = 0; i < enemiesToDamage.Length; i++)
-            {
-                enemiesToDamage[i].GetComponent<Enemy>().TakeDamage(damage);
-                Debug.Log("damaged" + damage);
-            }
-            Debug.Log("Fire");
+            GameObject.Find("Player").GetComponent<Player>().health -= damage;
             timeToAttack = startTimeToAttack;
+            Debug.Log("Musuh Menyerang");
         }
     }
 
@@ -45,4 +42,6 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
+
+
 }

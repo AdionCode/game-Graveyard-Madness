@@ -27,7 +27,7 @@ public class SpawnEnemy : MonoBehaviour
             int randomSpawn = Random.Range(0, spawnPos.Length);
 
             Instantiate(enemyPrefabs[randomEnemy], spawnPos[randomSpawn].position, transform.rotation);
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(15f);
         }
     }
 }

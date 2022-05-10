@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 2f;
     private Vector2 xPos;
     bool isFacingRight;
+    public Animator animator;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        animator.SetFloat("Speed", Mathf.Abs(xPos.x));
         transform.Translate(new Vector2(xPos.x * Time.deltaTime * moveSpeed, 0f));
         if (isFacingRight && xPos.x > 0)
         {

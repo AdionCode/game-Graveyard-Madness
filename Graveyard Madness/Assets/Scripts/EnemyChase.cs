@@ -13,6 +13,8 @@ public class EnemyChase : MonoBehaviour
     Vector2 xPos;
     Vector2 lastPos;
 
+    public bool isAttackRange;
+
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -20,8 +22,9 @@ public class EnemyChase : MonoBehaviour
 
     void Update()
     {
+        isAttackRange = Vector2.Distance(transform.position, target.position) > stoppingDistance;
         // Mengejar player dari jarak saat ini ke jarak player
-        if (Vector2.Distance(transform.position, target.position) > stoppingDistance)
+        if (isAttackRange)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
         }
