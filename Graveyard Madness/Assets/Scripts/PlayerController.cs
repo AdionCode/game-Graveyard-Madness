@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 xPos;
     bool isFacingRight;
     public Animator animator;
+    public Transform playerPos;
 
     void Start()
     {
@@ -17,12 +18,21 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (playerPos.position.x > 30f)
+        {
+            playerPos.position = new Vector3(30f, playerPos.position.y, playerPos.position.z);
+        }
+        else if (playerPos.position.x < -34f)
+        {
+            playerPos.position = new Vector3(-34f, playerPos.position.y, playerPos.position.z);
+        }
         animator.SetFloat("Speed", Mathf.Abs(xPos.x));
         transform.Translate(new Vector2(xPos.x * Time.deltaTime * moveSpeed, 0f));
         if (isFacingRight && xPos.x > 0)
         {
             flip();
-        } else if (!isFacingRight && xPos.x < 0)
+        }
+        else if (!isFacingRight && xPos.x < 0)
         {
             flip();
         }
