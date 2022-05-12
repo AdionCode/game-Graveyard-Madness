@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class EnemyChase : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class EnemyChase : MonoBehaviour
     bool isFacingRight;
     Vector2 xPos;
     Vector2 lastPos;
+    public Animator animator;
 
     public bool isAttackRange;
 
@@ -26,7 +28,12 @@ public class EnemyChase : MonoBehaviour
         // Mengejar player dari jarak saat ini ke jarak player
         if (isAttackRange)
         {
+            animator.SetFloat("Speed", 0.2f);
             transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0.0f);
         }
 
         if (isFacingRight && target.position.x < transform.position.x)

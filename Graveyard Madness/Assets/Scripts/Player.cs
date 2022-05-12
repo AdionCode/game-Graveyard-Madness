@@ -5,10 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int health;
+    public HealthBar healthBar;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        healthBar.SetMaxHealth(health);
     }
 
     // Update is called once per frame
@@ -18,12 +20,9 @@ public class Player : MonoBehaviour
         {
             Destroy(this.gameObject);
             Debug.Log("Game Over!");
-        } 
+        }
+        healthBar.SetHealth(health);
     }
 
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        Debug.Log("Healt decrease");
-    }
+    
 }

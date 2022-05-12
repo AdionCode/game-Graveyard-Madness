@@ -13,6 +13,7 @@ public class EnemyAttack : MonoBehaviour
     public int damage;
 
     public bool dalamJankauan;
+    public Animator animator;
 
 
     void Start()
@@ -31,9 +32,17 @@ public class EnemyAttack : MonoBehaviour
     {
         if (timeToAttack <= 0 && !dalamJankauan)
         {
-            GameObject.Find("Player").GetComponent<Player>().health -= damage;
-            timeToAttack = startTimeToAttack;
-            Debug.Log("Musuh Menyerang");
+            animator.SetBool("isAttack", true);
+            if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Enemy_Attack"))
+            {
+                GameObject.Find("Player").GetComponent<Player>().health -= damage;
+                Debug.Log("Musuh Menyerang");
+                timeToAttack = startTimeToAttack;
+            }
+        }
+        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Enemy_Attack"))
+        {
+            animator.SetBool("isAttack", false);
         }
     }
 
